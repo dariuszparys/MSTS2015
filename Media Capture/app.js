@@ -4,6 +4,7 @@
 
 	var videoElement;
 	var canvasElement;
+	var device;
 	
 	document.addEventListener("DOMContentLoaded", () => {
 
@@ -14,20 +15,23 @@
 		videoElement.addEventListener("click", capturePhoto);
 
 	});
-
+	
 	function captureAction() {
 		
 		navigator.mediaDevices.getUserMedia( {
 			video: {
 				facingMode: "user"
 			}
-		}).then( function( stream ) {
+		}).then( ( stream ) => {
 			if(typeof(videoElement.srcObject) != "undefined") {
 				videoElement.srcObject = stream;	
 			} else {
 				videoElement.src = URL.createObjectURL(stream);
 			}
-		}).catch( function( error ) {
+			
+			if( videoElement.paused ) videoElement.play();
+			
+		}).catch( ( error ) => {
 			console.log(`${error.name}: ${error.message}`);
 		})		
 	}
