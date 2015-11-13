@@ -10,44 +10,65 @@ class MyObject {
 	
 }
 
+function sleep(ms) {
+	return new Promise( (resolve) => {
+		setTimeout( () => {
+			resolve();
+		}, ms);
+	});	
+};
+	
+async function sleepForSeconds( seconds ) {
+	let milliSeconds = seconds * 1000;
+	return await sleep( milliSeconds );
+};
 
-class AsyncDemo {
+class GeneratorDemo {
 	
-	httpGet(url) {
-		return new Promise( (resolve, reject ) => {
-			let request = new XMLHttpRequest();
-			request.open("GET", url);
-			
-			request.onload = () => {
-				if( request.status == 200 ) {
-					resolve( request.response );
-				} else {
-					reject( Error( request.statustext ) );
-				}
-			};
-			
-			request.onerror = () => {
-				reject( Error("Network error") );				
-			};
-			
-			request.send();
-		});
-	}
-	
-	async function httpGetMSEdgeSite() {
-		let url = "http://dev.microsoftedge.com";
-		return await httpGet(url);
-	}
-	
-}
+	* speakers() {
+		yield "Dariusz Parys";
+		yield "Daniel Meixner";
+		yield "Christian Binder";
+		yield "Marco Richardson";
+		yield "Christian Weyer";
+	};
 
+	* [Symbol.iterator] () {
+		yield "Dariusz Parys";
+		yield "Daniel Meixner";
+		yield "Christian Binder";
+		yield "Marco Richardson";
+		yield "Christian Weyer";		
+	}	
+};
+	
 document.addEventListener("DOMContentLoaded", () => {
+	
+	// Demo Classes
 	var obj = new MyObject();
 	obj.sayHello();
 	
-	httpGetMSEdgeSite().then( ( response ) => {
-		console.log( response );
-	}).catch( ( error ) => {
-		console.log( error );
-	});
+	// Demo Promises and Async/Await
+	sleepForSeconds(2).then( () => {
+		console.log("It works");
+	})
+	
+	let waiting = async () => await sleep( 4000 ).then( () => { console.log( "4 seconds" )});
+	waiting();
+	
+	
+	// Demo Generators
+	let generatorDemo = new GeneratorDemo();
+
+	let speakersGen = generatorDemo.speakers();
+	console.log(`Speaker: ${speakersGen.next().value}`);
+	console.log(`Speaker: ${speakersGen.next().value}`);
+	console.log(`Speaker: ${speakersGen.next().value}`);
+		
+	for( var name of new GeneratorDemo()) {
+		console.log(`Speaker: ${name}`);
+	}
+	
+	
+	
 });
