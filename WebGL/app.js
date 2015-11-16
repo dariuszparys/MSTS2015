@@ -4,6 +4,7 @@
 	
 	var canvas;
 	var engine;
+	var cube;
 	
 	document.addEventListener("DOMContentLoaded", initialize);	
 	
@@ -40,22 +41,15 @@
 		var texture = new BABYLON.StandardMaterial("album1", scene);
 		texture.diffuseTexture = new BABYLON.Texture("assets/kill-em-all.jpg", scene);
 
-		var texture2 = new BABYLON.StandardMaterial("album2", scene);
-		texture2.diffuseTexture = new BABYLON.Texture("assets/master-of-puppets.jpg", scene);
-				
 		var ground = BABYLON.Mesh.CreateGround( "floor", 20, 20, 2, scene);
 		ground.material = material;
 		
 		var light = new BABYLON.PointLight("smallLight", new BABYLON.Vector3(0, 2, 0), scene);
 		
-		var cube = BABYLON.Mesh.CreateBox("cube1", 4, scene);
-		cube.position = new BABYLON.Vector3(3, 2, 5);
+		cube = BABYLON.Mesh.CreateBox("cube1", 4, scene);
+		cube.position = new BABYLON.Vector3(3, 4, 5);
 		cube.material = texture;
 
-		var cube = BABYLON.Mesh.CreateBox("cube2", 4, scene);
-		cube.position = new BABYLON.Vector3(-3, 2, 5);
-		cube.material = texture2;
-		
 		var camera = new BABYLON.FreeCamera("cam1", new BABYLON.Vector3(0, 3, -10), scene);
 		camera.attachControl(canvas, true);
 		
