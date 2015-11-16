@@ -53,6 +53,10 @@ document.addEventListener("DOMContentLoaded", () => {
 		console.log("It works");
 	})
 	
+	console.log("before await");
+	await sleepForSeconds(2);
+	console.log("after await");
+	
 	let waiting = async () => await sleep( 4000 ).then( () => { console.log( "4 seconds" )});
 	waiting();
 	
