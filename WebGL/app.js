@@ -47,7 +47,7 @@
 		var light = new BABYLON.PointLight("smallLight", new BABYLON.Vector3(0, 2, 0), scene);
 		
 		cube = BABYLON.Mesh.CreateBox("cube1", 4, scene);
-		cube.position = new BABYLON.Vector3(3, 4, 5);
+		cube.position = new BABYLON.Vector3(3, 2, 5);
 		cube.material = texture;
 
 		var camera = new BABYLON.FreeCamera("cam1", new BABYLON.Vector3(0, 3, -10), scene);
